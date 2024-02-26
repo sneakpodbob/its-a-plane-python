@@ -150,7 +150,8 @@ def grab_current_temperature_openweather(location, apikey, units):
         content = json.loads(raw_data.decode("utf-8"))
         current_temp = content["main"]["temp"]
 
-    except:
+    except Exception as e:
+        print("Expection while getting via OpenWeather...", e)
         pass
 
     return current_temp
@@ -302,11 +303,11 @@ class WeatherScene(object):
             return
 
         if not (count % TEMPERATURE_REFRESH_SECONDS):
-
             if OPENWEATHER_API_KEY:
                 self.current_temperature = grab_current_temperature_openweather(
                     WEATHER_LOCATION, OPENWEATHER_API_KEY, TEMPERATURE_UNITS
                 )
+                print(self.current_temperature)
             else:
                 self.current_temperature = grab_current_temperature(
                     WEATHER_LOCATION, TEMPERATURE_UNITS

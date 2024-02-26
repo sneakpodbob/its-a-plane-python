@@ -18,7 +18,7 @@ except (ModuleNotFoundError, NameError, ImportError):
 RETRIES = 3
 RATE_LIMIT_DELAY = 1
 MAX_FLIGHT_LOOKUP = 5
-MAX_ALTITUDE = 10000  # feet
+MAX_ALTITUDE = 15000  # feet
 EARTH_RADIUS_KM = 6371
 BLANK_FIELDS = ["", "N/A", "NONE"]
 
@@ -130,6 +130,18 @@ class Overhead:
                             else ""
                         )
 
+                        dest_airport_name = (
+                            flight.destination_airport_name
+                            if not (flight.destination_airport_name.upper() in BLANK_FIELDS)
+                            else ""
+                        )
+
+                        airline = (
+                            flight.airline_short_name
+                            if not (flight.airline_short_name.upper() in BLANK_FIELDS)
+                            else ""
+                        )
+
                         callsign = (
                             flight.callsign
                             if not (flight.callsign.upper() in BLANK_FIELDS)
@@ -144,8 +156,18 @@ class Overhead:
                                 "vertical_speed": flight.vertical_speed,
                                 "altitude": flight.altitude,
                                 "callsign": callsign,
+                                "dest_airport_name": dest_airport_name,
+                                "airline": airline
                             }
                         )
+
+                        print("-------------------")
+                        print(origin)
+                        print(" to ")
+                        print(destination)
+                        print(dest_airport_name)
+                        print(airline + " " + callsign)
+                        print("-------------------")
                         break
 
                     except (KeyError, AttributeError):

@@ -10,6 +10,22 @@ DAY_COLOUR = colours.PINK_DARK
 DAY_FONT = fonts.small
 DAY_POSITION = (2, 23)
 
+def get_custom_day_string(day_of_week):
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    custom_strings = [
+        "Montag",
+        "Dienstag",
+        "Mittwoch",
+        "Donnerstag",
+        "Freitag",
+        "Samstag",
+        "Sunday"
+    ]
+
+    if 0 <= day_of_week < len(days):
+        return custom_strings[day_of_week]
+    else:
+        return "Invalid day of the week"
 
 class DayScene(object):
     def __init__(self):
@@ -25,8 +41,8 @@ class DayScene(object):
         else:
             # If there's no data to display
             # then draw the day
-            now = datetime.now()
-            current_day = now.strftime("%A")
+            now = datetime.now().weekday()
+            current_day = get_custom_day_string(now)
 
             # Only draw if time needs updated
             if self._last_day != current_day:
