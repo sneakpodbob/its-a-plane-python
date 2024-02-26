@@ -307,7 +307,6 @@ class WeatherScene(object):
                 self.current_temperature = grab_current_temperature_openweather(
                     WEATHER_LOCATION, OPENWEATHER_API_KEY, TEMPERATURE_UNITS
                 )
-                print(self.current_temperature)
             else:
                 self.current_temperature = grab_current_temperature(
                     WEATHER_LOCATION, TEMPERATURE_UNITS

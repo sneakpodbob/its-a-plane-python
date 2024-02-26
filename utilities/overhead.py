@@ -98,8 +98,6 @@ class Overhead:
             ]
             flights = sorted(flights, key=lambda f: distance_from_flight_to_home(f))
 
-            print("Flights: %d" % len(flights))
-
             for flight in flights[:MAX_FLIGHT_LOOKUP]:
 
                 retries = RETRIES
@@ -151,16 +149,6 @@ class Overhead:
                             if not (flight.callsign.upper() in BLANK_FIELDS)
                             else ""
                         )
-
-                        
-                        print("-------------------")
-                        print(origin)
-                        print(" to ")
-                        print(destination)
-                        print(dest_airport_name)
-                        print(airline)
-                        print(callsign)
-                        print("-------------------")
 
                         data.append(
                             {
