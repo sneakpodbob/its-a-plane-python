@@ -98,7 +98,10 @@ class Overhead:
             ]
             flights = sorted(flights, key=lambda f: distance_from_flight_to_home(f))
 
+            print("Flights: %d" % len(flights))
+
             for flight in flights[:MAX_FLIGHT_LOOKUP]:
+
                 retries = RETRIES
 
                 while retries:
@@ -108,6 +111,7 @@ class Overhead:
                     # Grab and store details
                     try:
                         details = self._api.get_flight_details(flight)
+                        flight.set_flight_details(details)
 
                         # Get plane type
                         try:
@@ -148,6 +152,16 @@ class Overhead:
                             else ""
                         )
 
+                        
+                        print("-------------------")
+                        print(origin)
+                        print(" to ")
+                        print(destination)
+                        print(dest_airport_name)
+                        print(airline)
+                        print(callsign)
+                        print("-------------------")
+
                         data.append(
                             {
                                 "plane": plane,
@@ -161,17 +175,21 @@ class Overhead:
                             }
                         )
 
-                        print("-------------------")
-                        print(origin)
-                        print(" to ")
-                        print(destination)
-                        print(dest_airport_name)
-                        print(airline + " " + callsign)
-                        print("-------------------")
                         break
 
-                    except (KeyError, AttributeError):
+                    except KeyError as e:
+                        print("KeyError")
                         retries -= 1
+                        print(e)
+                    except AttributeError as e:
+                        print("AttributeError")
+                        retries -= 1
+                        keysList = list(details.keys())
+                        print(keysList)
+                        print(e)
+                    except Exception as e:
+                        print("Exception thrown in get_flight_details block")
+                        print(e)
 
             with self._lock:
                 self._new_data = True
@@ -179,8 +197,12 @@ class Overhead:
                 self._data = data
 
         except (ConnectionError, NewConnectionError, MaxRetryError):
+            print("ConnectionError, NewConnectionError, MaxRetryError")
             self._new_data = False
             self._processing = False
+        except Exception as e:
+            print("Exception thrown in get_flights block")
+            print(e)
 
     @property
     def new_data(self):
