@@ -91,7 +91,7 @@ sudo /usr/bin/python3 /home/pi/its-a-plane-python/its-a-plane.py > /home/pi/plan
 ```
 
 ### Rainfall chart
-If weather data is being pulled from my server (as opposed to using `OPENWEATHER_API_KEY`) then you can
+If weather data is being pulled from the original authors server (as opposed to using `OPENWEATHER_API_KEY`) then you can
 display a chart of rainfall by adding the following to your `config.py`:
 
 ```
