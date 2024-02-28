@@ -52,6 +52,9 @@ def extract_words_until_length(string, length):
     if (len(result) == 0):
         result.append(string[:length])
 
+    if (string.upper().startswith("SAN FRANCISCO")):
+        return "San Fran"
+
     return ' '.join(result)
 
 class FlightDetailsScene(object):
